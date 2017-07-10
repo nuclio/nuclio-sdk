@@ -2,8 +2,6 @@
 package main
 
 import (
-	"archive/tar"
-	"compress/gzip"
 	"context"
 	"flag"
 	"fmt"
@@ -21,8 +19,11 @@ import (
 )
 
 const (
-	ghUser  = "nuclio"
-	ghRepo  = "nuclio-tools"
+	ghUser = "nuclio"
+	ghRepo = "nuclio-tools"
+)
+
+var (
 	exeFile = "nuclio-build"
 )
 
@@ -42,16 +43,23 @@ func fetchURL() (string, error) {
 	cl := github.NewClient(nil)
 	ctx := context.Background()
 	log.Printf("getting releases")
-	rels, _, err := cl.Repositories.ListReleases(ctx, ghRepo, ghUser, nil)
+	allRels, _, err := cl.Repositories.ListReleases(ctx, ghRepo, ghUser, nil)
 	if err != nil {
 		return "", err
+	}
+	var rels []*github.RepositoryRelease
+	for _, rel := range allRels {
+		if rel.GetDraft() || rel.GetPrerelease() {
+			continue
+		}
+		rels = append(rels, rel)
 	}
 	sort.Sort(byTime(rels))
 	rel := rels[0]
 	log.Printf("latest release: %s", rel.GetName())
 	arch := fmt.Sprintf("%s-%s", runtime.GOOS, runtime.GOARCH)
-	// nuclio-tools-v0.1.0-linux-amd64.tar.gz
-	name := fmt.Sprintf("%s-%s-%s.tar.gz", ghRepo, rel.GetName(), arch)
+	// nuclio-tools-0.1.0-linux-amd64
+	name := fmt.Sprintf("%s-%s-%s", ghRepo, rel.GetName(), arch)
 	for _, ast := range rel.Assets {
 		if strings.HasSuffix(ast.GetBrowserDownloadURL(), name) {
 			return ast.GetBrowserDownloadURL(), nil
@@ -59,32 +67,6 @@ func fetchURL() (string, error) {
 	}
 
 	return "", fmt.Errorf("can't find release for %s in version %s", arch, rel.GetName())
-}
-
-func extract(rdr io.Reader, wtr io.Writer) error {
-	gz, err := gzip.NewReader(rdr)
-	if err != nil {
-		return err
-	}
-	defer gz.Close()
-	tr := tar.NewReader(gz)
-	for {
-		h, err := tr.Next()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return err
-		}
-		if h.Name == exeFile {
-			_, err := io.Copy(wtr, tr)
-			if err != nil {
-				return err
-			}
-			return nil
-		}
-	}
-	return fmt.Errorf(`can't find %q in tar`, exeFile)
 }
 
 func die(err error) {
@@ -115,6 +97,9 @@ func main() {
 	}
 	defer resp.Body.Close()
 
+	if runtime.GOOS == "windows" {
+		exeFile += ".exe"
+	}
 	log.Printf("exracting tar to %q", exeFile)
 
 	out, err := os.Create(exeFile)
@@ -123,7 +108,8 @@ func main() {
 	}
 	defer out.Close()
 
-	if err = extract(resp.Body, out); err != nil {
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
 		die(err)
 	}
 	if runtime.GOOS != "windows" {
