@@ -1,0 +1,25 @@
+function:
+  name: example
+  handler: GolangExample
+
+event_sources:
+
+  http1:
+    class: "sync"
+    kind: "http"
+    enabled: true
+    listen_address: "0.0.0.0:1968"
+    num_workers: 8
+
+  aws_rmq:
+    class: "async"
+    kind: "rabbit-mq"
+    enabled: true
+    batch_size: 1
+    url: "amqp://guest:guest@34.224.60.166:5672"
+    exchange: "functions"
+    topic: null
+    secret: null
+    options: null
+    dlq: "2"
+    retries: 1
