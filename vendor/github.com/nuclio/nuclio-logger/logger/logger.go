@@ -1,7 +1,6 @@
 package logger
 
 type Logger interface {
-
 	// emit a log entry of a given verbosity. the first argument may be an object, a string
 	// or a format string. in case of the latter, the following varargs are passed
 	// to a formatter (e.g. fmt.Sprintf)
