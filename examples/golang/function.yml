@@ -4,13 +4,6 @@ function:
 
 event_sources:
 
-  http1:
-    class: "sync"
-    kind: "http"
-    enabled: true
-    listen_address: "0.0.0.0:1968"
-    num_workers: 8
-
   aws_rmq:
     class: "async"
     kind: "rabbit-mq"
