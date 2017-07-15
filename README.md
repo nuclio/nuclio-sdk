@@ -23,7 +23,7 @@ Run the processor locally and then access port 8080:
 docker run -p 8080:8080 example:latest
 ```
 
-Now deploy it to the kubernetes cluster:
+Now deploy it to the kubernetes cluster (**Important:** the external IP must be set as an insecure registry in your local docker client):
 ```
 nuclio-deploy -k ~/.kube/config -r <external IP address>:31276 -p 31010 example:latest
 ```
