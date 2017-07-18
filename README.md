@@ -38,3 +38,5 @@ Create it with kubectl:
 ```
 kubectl create -f function.yaml
 ```
+
+You can now do an HTTP GET on `<k8s node ip>:31010` to trigger the function.
