@@ -1,21 +1,19 @@
 package example
 
 import (
-    "github.com/nuclio/nuclio-sdk/event"
-    "github.com/nuclio/nuclio/pkg/processor/runtime"
-    "github.com/nuclio/nuclio/pkg/processor/eventsource/http"
+    "github.com/nuclio/nuclio-sdk"
 )
 
-func GolangExample(context *runtime.Context, event event.Event) (interface{}, error) {
+func GolangExample(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
     context.Logger.InfoWith("Got event",
         "url", event.GetURL(),
         "size", event.GetSize(),
         "timestamp", event.GetTimestamp())
 
-    return http.Response{
+    return nuclio.Response{
         StatusCode:  201,
         ContentType: "application/text",
-        Header: map[string]string{
+        Headers: map[string]string{
             "x-v3io-something": "30",
         },
         Body: []byte("Response from golang"),
