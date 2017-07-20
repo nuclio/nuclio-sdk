@@ -5,15 +5,13 @@
 package handler
 
 import (
-    "github.com/nuclio/nuclio-sdk/event"
-    "github.com/nuclio/nuclio/pkg/processor/runtime"
-    "github.com/nuclio/nuclio/pkg/processor/eventsource/http"
+    "github.com/nuclio/nuclio-sdk"
 )
 
-func Handler(context *runtime.Context, event event.Event) (interface{}, error) {
+func Handler(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
     context.Logger.Info("Event received")
 
-    return http.Response{
+    return nuclio.Response{
         StatusCode:  200,
         ContentType: "application/text",
         Body: []byte("Response from handler"),
