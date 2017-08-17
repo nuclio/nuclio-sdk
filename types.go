@@ -11,7 +11,6 @@ type ID struct {
 
 // NewID creates new random event ID
 func NewID() ID {
-	// create a unique request ID
 	id := uuid.NewV4()
 	return ID{&id}
 }
