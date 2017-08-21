@@ -1,3 +1,7 @@
 build:
   image: golang:1.8
+  # You can either provide your own install script
   script: install.sh
+  # Or list commands to run (will run after script)
+  commands:
+      - apt install -y jq
