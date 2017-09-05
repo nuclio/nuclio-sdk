@@ -2,18 +2,29 @@
 // a Handler() function in the handler package. Future implementations
 // will alleviate this limitation
 
-package handler
+// To build the handler run
+//	go build -buildmode=plugin -o handler.so handler.go
+
+package main
 
 import (
-    "github.com/nuclio/nuclio-sdk"
+	"github.com/nuclio/nuclio-sdk"
 )
 
-func Handler(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
-    context.Logger.Info("Event received")
+var (
+	// Make sure our handler has the right signature
+	_ = nuclio.EventHandler(Handler)
+)
 
-    return nuclio.Response{
-        StatusCode:  200,
-        ContentType: "application/text",
-        Body: []byte("Response from handler"),
-    }, nil
+// Handler is the event Handler
+func Handler(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
+	context.Logger.Info("Event received")
+
+	return nuclio.Response{
+		StatusCode:  200,
+		ContentType: "application/text",
+		Body:        []byte("Response from handler"),
+	}, nil
 }
+
+func main() {}
