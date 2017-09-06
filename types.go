@@ -4,14 +4,19 @@ import (
 	"github.com/satori/go.uuid"
 )
 
-// ID is an event ID
-type ID *uuid.UUID
+// ID is event ID
+type ID struct {
+	*uuid.UUID
+}
 
-// NewID return a new random ID
+// NewID creates new random event ID
 func NewID() ID {
-	// create a unique request ID
 	id := uuid.NewV4()
-	return ID(&id)
+	return ID{&id}
+}
+
+func (id ID) String() string {
+	return id.UUID.String()
 }
 
 // EventHandler is function signature and event handler function
