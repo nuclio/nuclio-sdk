@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	// Make sure our handler has the right signature
-	_ = nuclio.EventHandler(Handler)
+// Make sure our handler has the right signature
+//	_ = nuclio.EventHandler(Handler)
 )
 
 // Handler is the event Handler
