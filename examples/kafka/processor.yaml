@@ -1,15 +1,13 @@
-function:
-  name: kafka_example
-  handler: GolangExample
-
 event_sources:
 
-  aws_kakfa:
+  kafka:
     class: "async"
     kind: "kafka"
     enabled: true
-    broker: "34.224.60.166"
-    group: "logs"
-    topic:
-      - errors
-      - warnings
+    #    host: "34.224.60.166"
+    #topic: logs
+    host: "localhost:9092"
+    topic: "topic1"
+
+function:
+  config_path: "function.yaml"

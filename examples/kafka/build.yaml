@@ -1,7 +1,4 @@
-image: alpine:edge
-commands:
-  - apk update
-  - apk add git go librdkafka musl-dev
-  - go get -u github.com/confluentinc/confluent-kafka-go/kafka
-tags:
-  - kafka
+build:
+  image: python:3-alpine
+  copy:
+      - handler.py
