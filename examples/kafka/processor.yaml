@@ -1,0 +1,15 @@
+function:
+  name: kafka_example
+  handler: GolangExample
+
+event_sources:
+
+  aws_kakfa:
+    class: "async"
+    kind: "kafka"
+    enabled: true
+    broker: "34.224.60.166"
+    group: "logs"
+    topic:
+      - errors
+      - warnings
