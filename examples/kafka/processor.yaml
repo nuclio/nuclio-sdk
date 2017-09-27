@@ -4,8 +4,6 @@ event_sources:
     class: "async"
     kind: "kafka"
     enabled: true
-    #    host: "34.224.60.166"
-    #topic: logs
     host: "localhost:9092"
     topic: "topic1"
 
