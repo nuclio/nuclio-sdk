@@ -1,0 +1,11 @@
+event_sources:
+
+  kafka:
+    class: "async"
+    kind: "kafka"
+    enabled: true
+    host: "localhost:9092"
+    topic: "topic1"
+
+function:
+  config_path: "function.yaml"
