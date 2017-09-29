@@ -8,10 +8,10 @@ export GOPATH=~/nuclio && mkdir -p $GOPATH
 go get github.com/nuclio/nuclio-sdk
 ```
 
-To start deploying functions we'll a remote kubernetes cluster which we can install in one of two ways:
+To start deploying functions we'll need a remote kubernetes cluster which we can install in one of two ways:
 
-1. [Installation from scratch on Ubuntu](hack/k8s/install/scratch/README.md)
-2. [Local VM with Vagrant](hack/k8s/install/vagrant/README.md)
+1. [From scratch on Ubuntu](hack/k8s/install/scratch/README.md)
+2. [On a local VM with Vagrant](hack/k8s/install/vagrant/README.md)
 
 With a functioning kuberenetes cluster (with built-in docker registry) and a working kubectl, we can go ahead and install the nuclio services on the cluster:
 
