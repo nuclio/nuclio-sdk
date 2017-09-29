@@ -1,7 +1,8 @@
+# Installing Kubernetes from scratch on Ubuntu
+
 This document will guide you through setting up a Kubernetes cluster capable of receiving nuclio functions. On top of vanilla kubernetes you'll install:
 * Weave CNI + a plugin to support `HostPort`
 * A private docker registry and a proxy
-* The nuclio controller, which listens for changes on function custom resources and applies that to deployments
 
 This guide assumes Ubuntu 16.04 server with the TCP ports 6443 and 31276 open (you should also open range on which functions can be invoked over HTTP in the range of 30000-32767). Start by cloning nuclio to your GOPATH (make sure you have one first):
 

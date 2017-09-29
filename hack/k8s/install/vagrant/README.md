@@ -1,4 +1,4 @@
-# Installing using Vagrant
+# Installing Kubernetes with Vagrant
 
 ## Prerequisites
 
