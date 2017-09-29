@@ -37,7 +37,7 @@ This will start an Ubuntu 16.04 VM and run each of the [required steps](../../..
 SSH into the machine and make sure the cluster is fully functioning by:
 
 ```bash
-$GOPATH/src/github.com/nuclio-sdk/hack/k8s/install/vagrant && vagrant ssh
+$GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/vagrant && vagrant ssh
 ```
 
 Ask kubectl to print out all of the Kubernetes pods running in all namespaces:
@@ -68,7 +68,7 @@ https://kubernetes.io/docs/tasks/tools/install-kubectl/
 Now get the kubeconfig from within the cluster and copy it to ~/.kube/config so that `kubectl` uses it by default.
 
 ```
-cd $GOPATH/src/github.com/nuclio-sdk/hack/k8s/install/vagrant && vagrant ssh -c "sudo cat /home/ubuntu/.kube/config" > ~/.kube/config && cd -
+cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/vagrant && vagrant ssh -c "sudo cat /home/ubuntu/.kube/config" > ~/.kube/config && cd -
 ```
 
 Open up `~/.kube/config` in an editor and replace `server: https://<whatever>:6443` with `server: https://10.100.100.10:6443` so that kubectl uses the external IP address of the VM.
