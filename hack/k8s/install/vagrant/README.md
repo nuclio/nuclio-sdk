@@ -16,12 +16,12 @@ $ brew install caskroom/cask/virtualbox
 $ brew install caskroom/cask/vagrant
 ```
 
-## Installing Kubernetes in Vagrant
+## Starting the Kubernetes VM:
 
-From current folder (`$GOPATH/src/github.com/nuclio-sdk/hack/k8s/install/vagrant`) run:
+Ask Vagrant to provision our VM. This will take a while, as it install Kubernetes and all of its dependencies from scratch.
 
 ```bash
-$ vagrant up
+cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/vagrant && vagrant up
 ```
 
 This will start an Ubuntu 16.04 VM and run each of the [required steps](../../../docs/k8s/README.md) to have a Kubernetes cluster running with Nuclio.
@@ -30,17 +30,17 @@ This will start an Ubuntu 16.04 VM and run each of the [required steps](../../..
 
 - Host IP: `10.100.100.10`
 - Docker Registry: `10.100.100.10:31276`
-- GOPATH: `/opt/nuclio`
+- GOPATH: `/home/ubuntu/nuclio`
 
-## Accessing the vagrant machine
+## Optional: Verify that everything is up and running
 
-From current folder (`$GOPATH/src/github.com/nuclio-sdk/hack/k8s/install/vagrant`) run:
+SSH into the machine and make sure the cluster is fully functioning by:
 
 ```bash
-$ vagrant ssh
+$GOPATH/src/github.com/nuclio-sdk/hack/k8s/install/vagrant && vagrant ssh
 ```
 
-You can make sure the cluster is fully functional by running:
+Ask kubectl to print out all of the Kubernetes pods running in all namespaces:
 
 ```bash
 ubuntu@k8s:~$ kubectl get pods --all-namespaces
