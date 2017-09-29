@@ -16,7 +16,7 @@ To start deploying functions we'll need a remote kubernetes cluster which we can
 With a functioning kuberenetes cluster (with built-in docker registry) and a working kubectl, we can go ahead and install the nuclio services on the cluster:
 
 ```
-cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/resources && kubectl create -f controller.yaml,playground.yaml && cd -
+cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/scratch/resources && kubectl create -f controller.yaml,playground.yaml && cd -
 ```
 
 Use `kubectl get pods` to verify both controller and playground have a status of `RUNNING`.
