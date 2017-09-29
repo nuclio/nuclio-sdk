@@ -38,4 +38,22 @@ func HelloWorld(context *nuclio.Context, event nuclio.Event) (interface{}, error
 
 Once the playground indicates that the function was deployed successfully, head over to the "Invoke" tab and invoke your first nuclio function.
 
+#### Using nuctl, the nuclio command line tool
 
+First, make sure you have Golang 1.8+ (https://golang.org/doc/install) and Docker (https://docs.docker.com/engine/installation). Now build nuctl, the nuclio command line tool and add `$GOPATH/bin` to path for this session:
+```
+go get github.com/nuclio/nuclio/cmd/nuctl
+PATH=$PATH:$GOPATH/bin
+```
+
+Before docker images can be pushed to our built in registry, we need to add `<kubernetes cluster ip>:31276` (e.g. `10.100.100.10:31276` if you're using Vagrant) to the list of insecure registries. If you're using Docker for Mac you can find this under `Preferences -> Daemon`.
+
+Deploy the hello world example:
+```
+nuctl run -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world -r <kubernetes cluster ip>:31276 helloworld --run-registry localhost:5000
+```
+
+And finally execute it:
+```
+nuctl exec helloworld
+```
