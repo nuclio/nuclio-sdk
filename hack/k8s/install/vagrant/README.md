@@ -59,7 +59,7 @@ Output should be similar to:
   kube-system   weave-net-jc601                      2/2       Running   0          8m
 ```
 
-## Optional: Install kubectl locally
+## Install kubectl locally
 
 If you don't want to keep SSH'ing into the machine to run kubectl, you can install kubectl locally and configure it to work with the VM Kubernetes cluster. Start by installing kubectl:
 
