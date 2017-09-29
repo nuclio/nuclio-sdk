@@ -1,42 +1,59 @@
 # nuclio-sdk
-SDK for working with Nuclio
+SDK for working with nuclio
 
 ### Getting started
-Make sure to set your `GOPATH` and then get the stuff:
+First, let's prepare a GOPATH directory (or use your own) and get the nuclio SDK:
 ```
-go get -d github.com/nuclio/nuclio-sdk
-go get github.com/nuclio/nuclio/cmd/nubuild
+export GOPATH=~/nuclio && mkdir -p $GOPATH
+go get github.com/nuclio/nuclio-sdk
 ```
 
-Add the bin to path, so we can run nubuild:
+To start deploying functions we'll need a remote kubernetes cluster which we can install in one of two ways:
+
+1. [On a local VM with Vagrant](hack/k8s/install/vagrant/README.md) (recommended)
+2. [From scratch on Ubuntu](hack/k8s/install/scratch/README.md)
+
+With a functioning kuberenetes cluster (with built-in docker registry) and a working kubectl, we can go ahead and install the nuclio services on the cluster:
+
 ```
+cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/resources && kubectl create -f controller.yaml,playground.yaml && cd -
+```
+
+Use `kubectl get pods` to verify both controller and playground have a status of `RUNNING`.
+
+#### Using the nuclio playground
+Browse to http://10.100.100.10:32050 - you should be greeted by the nuclio playground. Paste the following into the editor, name it something like `helloworld.go` and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network.
+
+```
+package helloworld
+
+import (
+    "github.com/nuclio/nuclio-sdk"
+)
+
+func HelloWorld(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
+    return "Hello, World", nil
+}
+```
+
+Once the playground indicates that the function was deployed successfully, head over to the "Invoke" tab and invoke your first nuclio function.
+
+#### Using nuctl, the nuclio command line tool
+
+First, make sure you have Golang 1.8+ (https://golang.org/doc/install) and Docker (https://docs.docker.com/engine/installation). Now build nuctl, the nuclio command line tool and add `$GOPATH/bin` to path for this session:
+```
+go get github.com/nuclio/nuclio/cmd/nuctl
 PATH=$PATH:$GOPATH/bin
 ```
-Build the example from SDK example and push it to your registry:
+
+Before docker images can be pushed to our built in registry, we need to add `<kubernetes cluster ip>:31276` (e.g. `10.100.100.10:31276` if you're using Vagrant) to the list of insecure registries. If you're using Docker for Mac you can find this under `Preferences -> Daemon`.
+
+Deploy the hello world example:
 ```
-nubuild -n nuclio-hello-world --push <registryURL:port> $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world
+nuctl run -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world -r <kubernetes cluster ip>:31276 helloworld --run-registry localhost:5000
 ```
 
-Run the processor locally and then access port 8080 to test it out:
+And finally execute it:
 ```
-docker run -p 8080:8080 nuclio-hello-world:latest
+nuctl exec helloworld
 ```
-
-Create a function.yaml file with the following contents:
-```
-apiVersion: nuclio.io/v1
-kind: Function
-metadata:
-  name: handler
-spec:
-  replicas: 1
-  image: localhost:5000/nuclio-hello-world:latest
-  httpPort: 31010
-```
-
-Create it with kubectl:
-```
-kubectl create -f function.yaml
-```
-
-You can now do an HTTP GET on `<k8s node ip>:31010` to trigger the function.
