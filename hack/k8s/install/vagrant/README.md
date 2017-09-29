@@ -43,7 +43,7 @@ $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/vagrant && vagrant ssh
 Ask kubectl to print out all of the Kubernetes pods running in all namespaces:
 
 ```bash
-ubuntu@k8s:~$ kubectl get pods --all-namespaces
+kubectl get pods --all-namespaces
 ```
 Output should be similar to:
 ```bash
@@ -71,5 +71,10 @@ Now get the kubeconfig from within the cluster and copy it to ~/.kube/config so 
 cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/vagrant && vagrant ssh -c "sudo cat /home/ubuntu/.kube/config" > ~/.kube/config && cd -
 ```
 
-Open up `~/.kube/config` in an editor and replace `server: https://<whatever>:6443` with `server: https://10.100.100.10:6443` so that kubectl uses the external IP address of the VM.
+Open up `~/.kube/config` in an editor and replace `server: https://<whatever>:6443` with `server: https://10.100.100.10:6443` so that kubectl uses the external IP address of the VM. Test this by running:
+
+```bash
+kubectl get pods --all-namespaces
+```
+
 
