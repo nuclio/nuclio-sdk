@@ -50,10 +50,10 @@ Before docker images can be pushed to our built in registry, we need to add `<ku
 
 Deploy the hello world example:
 ```
-nuctl run -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world -r <kubernetes cluster ip>:31276 helloworld --run-registry localhost:5000
+nuctl deploy -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world -r <kubernetes cluster ip>:31276 helloworld --run-registry localhost:5000
 ```
 
 And finally execute it:
 ```
-nuctl exec helloworld
+nuctl invoke helloworld
 ```
