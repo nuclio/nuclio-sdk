@@ -23,7 +23,7 @@ cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/scratch/resources &
 Use `kubectl get pods` to verify both controller and playground have a status of `RUNNING`.
 
 #### Using the nuclio playground
-Browse to http://<cluster-ip>:32050 - you should be greeted by the nuclio playground. Choose one of the built in examples and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network. Once the function has been deployed, you can invoke it with a body by clicking "Invoke".
+Browse to `http://<cluster-ip>:32050` - you should be greeted by the nuclio playground. Choose one of the built in examples and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network. Once the function has been deployed, you can invoke it with a body by clicking "Invoke".
 
 #### Using nuctl, the nuclio command line tool
 
