@@ -1,4 +1,4 @@
-# Using nuclio with minikube
+# Installing Kubernetes with minikube
 
 Note: This is alpha level documentation - if you encounter any issues, feedback is welcomed.
 
@@ -23,3 +23,5 @@ minikube ssh -- docker run -d -p 5000:5000 registry:2
 ```
 
 Finally, add $(minikube ip):5000 to the list of insecure registries in Docker (e.g. in Docker for Mac this is in Preferences -> Daemon -> Insecure registries -> Apply & Restart).
+
+Once you are done, you can resume the [getting started guide](/README.md) to install nuclio on this cluster.

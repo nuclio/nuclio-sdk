@@ -77,4 +77,4 @@ Open up `~/.kube/config` in an editor and replace `server: https://<whatever>:64
 kubectl get pods --all-namespaces
 ```
 
-
+Once you are done, you can resume the [getting started guide](/README.md) to install nuclio on this cluster.

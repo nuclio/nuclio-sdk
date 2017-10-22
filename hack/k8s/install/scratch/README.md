@@ -56,3 +56,5 @@ In the final step we'll create the following:
 ```
 cd $GOPATH/src/github.com/nuclio/nuclio/hack/k8s/resources && kubectl create -f default-cluster-admin.yaml,registry.yaml && cd -
 ```
+
+Once you are done, you can resume the [getting started guide](/README.md) to install nuclio on this cluster.
