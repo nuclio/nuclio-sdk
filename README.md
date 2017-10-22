@@ -23,21 +23,7 @@ cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/scratch/resources &
 Use `kubectl get pods` to verify both controller and playground have a status of `RUNNING`.
 
 #### Using the nuclio playground
-Browse to http://10.100.100.10:32050 - you should be greeted by the nuclio playground. Paste the following into the editor, name it something like `helloworld.go` and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network.
-
-```
-package helloworld
-
-import (
-    "github.com/nuclio/nuclio-sdk"
-)
-
-func HelloWorld(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
-    return "Hello, World", nil
-}
-```
-
-Once the playground indicates that the function was deployed successfully, head over to the "Invoke" tab and invoke your first nuclio function.
+Browse to http://<cluster-ip>:32050 - you should be greeted by the nuclio playground. Choose one of the built in examples and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network. Once the function has been deployed, you can invoke it with a body by clicking "Invoke".
 
 #### Using nuctl, the nuclio command line tool
 
@@ -47,7 +33,7 @@ go get -u github.com/nuclio/nuclio/cmd/nuctl
 PATH=$PATH:$GOPATH/bin
 ```
 
-Before docker images can be pushed to our built in registry, we need to add `<kubernetes cluster ip>:31276` (e.g. `10.100.100.10:31276` if you're using Vagrant) to the list of insecure registries. If you're using Docker for Mac you can find this under `Preferences -> Daemon`.
+Before docker images can be pushed to our built in registry, we need to add `<cluster-ip>:31276` (e.g. `10.100.100.10:31276` if you're using Vagrant) to the list of insecure registries. If you're using Docker for Mac you can find this under `Preferences -> Daemon`.
 
 Deploy the hello world example:
 ```
