@@ -40,7 +40,7 @@ Deploy the hello world example:
 nuctl deploy -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world --registry [registry address] helloworld --run-registry localhost:5000
 ```
 
-If you're using `minikube`, the registry address is `$(minikube ip):5000`. If you used `kubeadm` or `Vagrant`, the registry address is <cluster-ip>:31276.
+If you're using `minikube`, the registry address is `$(minikube ip):5000`. If you used `kubeadm` or `Vagrant`, the registry address is `10.100.100.10:31276`.
 
 And finally execute it:
 ```
