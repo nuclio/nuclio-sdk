@@ -28,7 +28,7 @@ This will start an Ubuntu 16.04 VM and run each of the [required steps](../../..
 
 ### Cluster Defaults
 
-- Host IP: `10.100.100.10`
+- Cluster IP: `10.100.100.10`
 - Docker Registry: `10.100.100.10:31276`
 - GOPATH: `/home/ubuntu/nuclio`
 
@@ -77,4 +77,4 @@ Open up `~/.kube/config` in an editor and replace `server: https://<whatever>:64
 kubectl get pods --all-namespaces
 ```
 
-
+Once you are done, you can resume the [getting started guide](/README.md) to install nuclio on this cluster.

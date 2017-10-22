@@ -1,4 +1,4 @@
-# Installing Kubernetes from scratch on Ubuntu
+# Installing Kubernetes from scratch with kubeadm on Ubuntu
 
 This document will guide you through setting up a Kubernetes cluster capable of receiving nuclio functions. On top of vanilla kubernetes you'll install:
 * Weave CNI + a plugin to support `HostPort`
@@ -56,3 +56,5 @@ In the final step we'll create the following:
 ```
 cd $GOPATH/src/github.com/nuclio/nuclio/hack/k8s/resources && kubectl create -f default-cluster-admin.yaml,registry.yaml && cd -
 ```
+
+Once you are done, you can resume the [getting started guide](/README.md) to install nuclio on this cluster.

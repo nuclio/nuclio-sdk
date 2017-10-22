@@ -8,10 +8,11 @@ export GOPATH=~/nuclio && mkdir -p $GOPATH
 go get -u github.com/nuclio/nuclio-sdk
 ```
 
-To start deploying functions we'll need a remote kubernetes cluster which we can install in one of two ways:
+To start deploying functions we'll need a remote kubernetes cluster which we can install in one of three ways:
 
-1. [On a local VM with Vagrant](hack/k8s/install/vagrant/README.md) (recommended)
-2. [From scratch on Ubuntu](hack/k8s/install/scratch/README.md)
+1. [On a local VM with minikube](hack/k8s/install/minikube/README.md)
+2. [On a local VM with Vagrant](hack/k8s/install/vagrant/README.md)
+3. [From scratch with kubeadm on Ubuntu](hack/k8s/install/scratch/README.md)
 
 With a functioning kuberenetes cluster (with built-in docker registry) and a working kubectl, we can go ahead and install the nuclio services on the cluster:
 
@@ -22,21 +23,7 @@ cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/scratch/resources &
 Use `kubectl get pods` to verify both controller and playground have a status of `RUNNING`.
 
 #### Using the nuclio playground
-Browse to http://10.100.100.10:32050 - you should be greeted by the nuclio playground. Paste the following into the editor, name it something like `helloworld.go` and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network.
-
-```
-package helloworld
-
-import (
-    "github.com/nuclio/nuclio-sdk"
-)
-
-func HelloWorld(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
-    return "Hello, World", nil
-}
-```
-
-Once the playground indicates that the function was deployed successfully, head over to the "Invoke" tab and invoke your first nuclio function.
+Browse to `http://<cluster-ip>:32050` - you should be greeted by the nuclio playground. Choose one of the built in examples and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network. Once the function has been deployed, you can invoke it with a body by clicking "Invoke".
 
 #### Using nuctl, the nuclio command line tool
 
@@ -46,12 +33,14 @@ go get -u github.com/nuclio/nuclio/cmd/nuctl
 PATH=$PATH:$GOPATH/bin
 ```
 
-Before docker images can be pushed to our built in registry, we need to add `<kubernetes cluster ip>:31276` (e.g. `10.100.100.10:31276` if you're using Vagrant) to the list of insecure registries. If you're using Docker for Mac you can find this under `Preferences -> Daemon`.
+Before docker images can be pushed to our built in registry, we need to add `<cluster-ip>:31276` (e.g. `10.100.100.10:31276` if you're using Vagrant) to the list of insecure registries. If you're using Docker for Mac you can find this under `Preferences -> Daemon`.
 
 Deploy the hello world example:
 ```
-nuctl deploy -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world -r <kubernetes cluster ip>:31276 helloworld --run-registry localhost:5000
+nuctl deploy -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world --registry [registry address] helloworld --run-registry localhost:5000
 ```
+
+If you're using `minikube`, the registry address is `$(minikube ip):5000`. If you used `kubeadm` or `Vagrant`, the registry address is `<cluster-ip>:31276`.
 
 And finally execute it:
 ```
