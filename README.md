@@ -5,7 +5,7 @@ SDK for working with nuclio
 First, let's prepare a GOPATH directory (or use your own) and get the nuclio SDK:
 ```
 export GOPATH=~/nuclio && mkdir -p $GOPATH
-go get github.com/nuclio/nuclio-sdk
+go get -u github.com/nuclio/nuclio-sdk
 ```
 
 To start deploying functions we'll need a remote kubernetes cluster which we can install in one of two ways:
@@ -42,7 +42,7 @@ Once the playground indicates that the function was deployed successfully, head 
 
 First, make sure you have Golang 1.8+ (https://golang.org/doc/install) and Docker (https://docs.docker.com/engine/installation). Now build nuctl, the nuclio command line tool and add `$GOPATH/bin` to path for this session:
 ```
-go get github.com/nuclio/nuclio/cmd/nuctl
+go get -u github.com/nuclio/nuclio/cmd/nuctl
 PATH=$PATH:$GOPATH/bin
 ```
 
