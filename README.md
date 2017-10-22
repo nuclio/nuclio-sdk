@@ -10,8 +10,9 @@ go get -u github.com/nuclio/nuclio-sdk
 
 To start deploying functions we'll need a remote kubernetes cluster which we can install in one of two ways:
 
-1. [On a local VM with Vagrant](hack/k8s/install/vagrant/README.md) (recommended)
-2. [From scratch on Ubuntu](hack/k8s/install/scratch/README.md)
+1. [On a local VM with Vagrant](hack/k8s/install/vagrant/README.md)
+2. [On a local VM with minikube](hack/k8s/install/minikube/README.md)
+3. [From scratch with kubeadm on Ubuntu](hack/k8s/install/scratch/README.md)
 
 With a functioning kuberenetes cluster (with built-in docker registry) and a working kubectl, we can go ahead and install the nuclio services on the cluster:
 
@@ -50,8 +51,10 @@ Before docker images can be pushed to our built in registry, we need to add `<ku
 
 Deploy the hello world example:
 ```
-nuctl deploy -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world -r <kubernetes cluster ip>:31276 helloworld --run-registry localhost:5000
+nuctl deploy -p $GOPATH/src/github.com/nuclio/nuclio-sdk/examples/hello-world --registry [registry address] helloworld --run-registry localhost:5000
 ```
+
+If you're using `minikube`, the registry address is `$(minikube ip):5000`. If you used `kubeadm` or `Vagrant`, the registry address is <cluster-ip>:31276.
 
 And finally execute it:
 ```
