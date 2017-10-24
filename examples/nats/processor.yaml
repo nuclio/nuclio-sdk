@@ -1,0 +1,12 @@
+event_sources:
+
+  nats:
+    class: "async"
+    kind: "nats"
+    enabled: true
+    num_workers: 4
+    host_url: "nats://localhost:4222"
+    topic: "topic1"
+
+function:
+  config_path: "function.yaml"
