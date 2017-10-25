@@ -8,7 +8,7 @@ export GOPATH=~/nuclio && mkdir -p $GOPATH
 go get -u github.com/nuclio/nuclio-sdk
 ```
 
-To start deploying functions we'll need a remote kubernetes cluster which we can install in one of three ways:
+To start deploying functions we'll need a remote Kubernetes **1.7+** cluster (nuclio uses CRDs which were introduced in 1.7) which we can install in one of three ways:
 
 1. [On a local VM with minikube](hack/k8s/install/minikube/README.md)
 2. [On a local VM with Vagrant](hack/k8s/install/vagrant/README.md)
@@ -20,7 +20,7 @@ With a functioning kuberenetes cluster (with built-in docker registry) and a wor
 cd $GOPATH/src/github.com/nuclio/nuclio-sdk/hack/k8s/install/scratch/resources && kubectl create -f controller.yaml,playground.yaml && cd -
 ```
 
-Use `kubectl get pods` to verify both controller and playground have a status of `RUNNING`.
+Use `kubectl get pods` to verify both controller and playground have a status of `Running`.
 
 #### Using the nuclio playground
 Browse to `http://<cluster-ip>:32050` - you should be greeted by the nuclio playground. Choose one of the built in examples and click deploy. The first build will populate the local docker cache with base images and such, so it might take a while depending on your network. Once the function has been deployed, you can invoke it with a body by clicking "Invoke".
