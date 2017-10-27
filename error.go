@@ -1,3 +1,5 @@
+// TODO: This will be documented once https://github.com/nuclio/nuclio-sdk/pull/21 is merged
+
 package nuclio
 
 type WithStatusCode interface {
