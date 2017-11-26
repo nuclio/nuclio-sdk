@@ -1,7 +1,6 @@
 package nuclio
 
 import (
-	"errors"
 	"time"
 )
 
